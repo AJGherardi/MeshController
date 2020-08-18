@@ -13,8 +13,8 @@ static void handler(struct device *dev)
         return;
     }
     // Read into buffer
-    uint8_t buffer[64];
-    uart_fifo_read(dev, buffer, 64);
+    uint8_t buffer[32];
+    uart_fifo_read(dev, buffer, 32);
     // Map to appropriate function
     switch (buffer[0])
     {
@@ -75,7 +75,11 @@ uint32_t join4(uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4)
 
 void write_data(struct device *dev, uint8_t op, uint8_t *buf, int len)
 {
-    static uint8_t write[64] = {};
+    if (!uart_irq_tx_ready(dev))
+    {
+        return;
+    }
+    static uint8_t write[32] = {};
     // Set op code
     write[0] = op;
     // Copy buffer
@@ -105,6 +109,8 @@ void init_usb(void)
             k_sleep(K_MSEC(100));
         }
     }
+    uart_line_ctrl_set(usb, UART_LINE_CTRL_DCD, 1);
+    uart_line_ctrl_set(usb, UART_LINE_CTRL_DSR, 1);
     k_busy_wait(1000000);
     // Set callback
     uart_irq_callback_set(usb, handler);
