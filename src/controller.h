@@ -5,8 +5,10 @@
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/mesh.h>
 
-void add_key(uint8_t app_key[16], uint16_t app_idx);
+void setup();
+void add_key(uint16_t app_idx);
 void provision(uint8_t uuid[16]);
-void setup(uint8_t net_key[16], uint16_t addr, uint32_t iv_index);
+void configure_node(uint16_t addr, uint16_t app_idx);
+void send_message(uint8_t state, uint16_t addr, uint16_t app_idx);
 
 #endif

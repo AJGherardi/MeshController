@@ -4,9 +4,21 @@
 #include <usb/usb_device.h>
 #include <drivers/uart.h>
 
+// Define usb op codes
+#define OP_SETUP 0x00
+#define OP_SETUP_STATUS 0x01
+#define OP_ADD_KEY 0x02
+#define OP_ADD_KEY_STATUS 0x03
+#define OP_UNPROVISIONED_BEACON 0x04
+#define OP_PROVISION 0x05
+#define OP_NODE_ADDED 0x06
+#define OP_CONFIGURE_NODE 0x07
+#define OP_CONFIGURE_NODE_STATUS 0x08
+#define OP_SEND_MESSAGE 0x09
+
 extern struct device *usb;
 
-void write_data(struct device *dev, uint8_t op, uint8_t *buf, int len);
+void write_usb(struct device *dev, uint8_t op, uint8_t *buf, int len);
 void init_usb(void);
 uint8_t *slice(uint8_t *source, size_t offset, size_t count);
 uint16_t join2(uint8_t d1, uint8_t d2);

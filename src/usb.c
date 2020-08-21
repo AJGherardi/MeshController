@@ -18,28 +18,36 @@ static void handler(struct device *dev)
     // Map to appropriate function
     switch (buffer[0])
     {
-    case 0x00:
+    case OP_SETUP:
     {
-        uint8_t net_key[16] = {};
-        memcpy(net_key, buffer + 1, 16);
-        uint16_t addr = join2(buffer[17], buffer[18]);
-        uint32_t iv_index = join4(buffer[19], buffer[20], buffer[21], buffer[22]);
-        setup(net_key, addr, iv_index);
+        setup();
         break;
     }
-    case 0x02:
+    case OP_ADD_KEY:
+    {
+        uint16_t app_idx = join2(buffer[1], buffer[2]);
+        add_key(app_idx);
+        break;
+    }
+    case OP_PROVISION:
     {
         uint8_t uuid[16] = {};
         memcpy(uuid, buffer + 1, 16);
         provision(uuid);
         break;
     }
-    case 0x04:
+    case OP_CONFIGURE_NODE:
     {
-        uint8_t app_key[16] = {};
-        memcpy(app_key, buffer + 1, 16);
-        uint16_t app_idx = join2(buffer[17], buffer[18]);
-        add_key(app_key, app_idx);
+        uint16_t addr = join2(buffer[1], buffer[2]);
+        uint16_t app_idx = join2(buffer[3], buffer[4]);
+        configure_node(addr, app_idx);
+        break;
+    }
+    case OP_SEND_MESSAGE:
+    {
+        uint16_t addr = join2(buffer[2], buffer[3]);
+        uint16_t app_idx = join2(buffer[4], buffer[5]);
+        send_message(buffer[1], addr, app_idx);
         break;
     }
     }
@@ -73,7 +81,7 @@ uint32_t join4(uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4)
     return output;
 }
 
-void write_data(struct device *dev, uint8_t op, uint8_t *buf, int len)
+void write_usb(struct device *dev, uint8_t op, uint8_t *buf, int len)
 {
     if (!uart_irq_tx_ready(dev))
     {

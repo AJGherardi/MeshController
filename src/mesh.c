@@ -5,12 +5,17 @@
 
 static void unprovisioned_beacon(uint8_t uuid[16], bt_mesh_prov_oob_info_t oob_info, uint32_t *uri_hash)
 {
-    write_data(usb, 0x01, uuid, 16);
+    // Write uuid to usb
+    write_usb(usb, OP_UNPROVISIONED_BEACON, uuid, 16);
 }
 
 static void node_added(uint16_t net_idx, uint8_t uuid[16], uint16_t addr, uint8_t num_elem)
 {
-    write_data(usb, 0x06, addr, 2);
+    // Convert addr and send
+    uint8_t write[2];
+    write[0] = (addr >> 8);
+    write[1] = (addr);
+    write_usb(usb, OP_NODE_ADDED, write, 2);
 }
 
 static void prov_reset(void)
@@ -42,7 +47,7 @@ void bt_ready(void)
     }
 }
 
-void send_msg(uint8_t state, uint16_t node_addr, uint16_t app_idx)
+void write_mesh(uint8_t state, uint16_t node_addr, uint16_t app_idx)
 {
     // Make msg buffer
     NET_BUF_SIMPLE_DEFINE(msg, 2 + 6);
