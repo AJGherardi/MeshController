@@ -55,6 +55,11 @@ static void handler(struct device *dev)
         reset();
         break;
     }
+    case OP_REBOOT:
+    {
+        reboot();
+        break;
+    }
     }
 }
 

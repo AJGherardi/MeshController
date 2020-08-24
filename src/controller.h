@@ -12,5 +12,6 @@ void provision(uint8_t uuid[16]);
 void configure_node(uint16_t addr, uint16_t app_idx);
 void send_message(uint8_t state, uint16_t addr, uint16_t app_idx);
 void reset();
+void reboot();
 
 #endif

@@ -4,9 +4,15 @@
 
 static uint16_t self_addr;
 
+void reboot()
+{
+    sys_reboot(SYS_REBOOT_WARM);
+}
+
 void reset()
 {
     bt_mesh_reset();
+    bt_mesh_cdb_clear();
 }
 
 void send_message(uint8_t state, uint16_t addr, uint16_t app_idx)
@@ -108,7 +114,6 @@ void setup()
     bt_rand(net_key, 16);
     bt_rand(dev_key, 16);
     // Create a config database
-    bt_mesh_cdb_clear();
     err = bt_mesh_cdb_create(net_key);
     if (err)
     {
