@@ -61,5 +61,20 @@ void write_mesh(uint8_t state, uint16_t node_addr, uint16_t app_idx)
     bt_mesh_model_msg_init(&msg, BT_MESH_MODEL_OP_GEN_ONOFF_SET_UNACK);
     net_buf_simple_add_u8(&msg, state);
     net_buf_simple_add_u8(&msg, 1);
-    bt_mesh_model_send(&root_models[3], &ctx, &msg, NULL, NULL);
+    bt_mesh_model_send(&root_models[2], &ctx, &msg, NULL, NULL);
+}
+
+void write_mesh_config(uint16_t node_addr)
+{
+    // Make msg buffer
+    NET_BUF_SIMPLE_DEFINE(msg, 2 + 4);
+    // Define msg context
+	struct bt_mesh_msg_ctx ctx = {
+		.app_idx = BT_MESH_KEY_DEV_REMOTE,
+		.addr = node_addr,
+		.send_ttl = BT_MESH_TTL_DEFAULT,
+	};
+    // Add paylode to buffer
+    bt_mesh_model_msg_init(&msg, BT_MESH_MODEL_OP_CONFIG_NODE_RESET);
+    bt_mesh_model_send(&root_models[1], &ctx, &msg, NULL, NULL);
 }

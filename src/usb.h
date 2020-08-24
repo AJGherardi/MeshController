@@ -17,6 +17,7 @@
 #define OP_SEND_MESSAGE 0x09
 #define OP_RESET 0x10
 #define OP_REBOOT 0x11
+#define OP_NODE_RESET 0x12
 
 extern struct device *usb;
 

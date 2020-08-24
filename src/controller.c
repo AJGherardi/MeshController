@@ -2,7 +2,7 @@
 #include "mesh.h"
 #include "usb.h"
 
-static uint16_t self_addr;
+static uint16_t self_addr = 1;
 
 void reboot()
 {
@@ -13,6 +13,11 @@ void reset()
 {
     bt_mesh_reset();
     bt_mesh_cdb_clear();
+}
+
+void reset_node(uint16_t addr)
+{
+    write_mesh_config(addr);
 }
 
 void send_message(uint8_t state, uint16_t addr, uint16_t app_idx)
@@ -126,8 +131,6 @@ void setup()
     {
         return;
     }
-    // Store addr
-    self_addr = 1;
     // Convert addr and send
     uint8_t write[2];
     write[0] = (self_addr >> 8);

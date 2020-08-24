@@ -60,6 +60,12 @@ static void handler(struct device *dev)
         reboot();
         break;
     }
+    case OP_NODE_RESET:
+    {
+        uint16_t addr = join2(buffer[1], buffer[2]);
+        reset_node(addr);
+        break;
+    }
     }
 }
 
