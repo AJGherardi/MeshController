@@ -20,7 +20,6 @@ static void node_added(uint16_t net_idx, uint8_t uuid[16], uint16_t addr, uint8_
 
 static void prov_reset(void)
 {
-    // TODO: send a reset ack
 }
 
 static uint8_t dev_uuid[16] = {0xdd, 0xdd};

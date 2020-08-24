@@ -50,6 +50,11 @@ static void handler(struct device *dev)
         send_message(buffer[1], addr, app_idx);
         break;
     }
+    case OP_RESET:
+    {
+        reset();
+        break;
+    }
     }
 }
 
