@@ -8,8 +8,10 @@
 #include <bluetooth/mesh.h>
 
 // Op codes
+#define BT_MESH_MODEL_OP_GEN_ONOFF_SET BT_MESH_MODEL_OP_2(0x82, 0x02)
 #define BT_MESH_MODEL_OP_GEN_ONOFF_SET_UNACK BT_MESH_MODEL_OP_2(0x82, 0x03)
 #define BT_MESH_MODEL_OP_CONFIG_NODE_RESET BT_MESH_MODEL_OP_2(0x80, 0x49)
+#define BT_MESH_MODEL_OP_GEN_ONOFF_STATUS BT_MESH_MODEL_OP_2(0x82, 0x04)
 
 void bt_ready(void);
 void write_mesh(uint8_t state, uint16_t node_addr, uint16_t app_idx);

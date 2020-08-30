@@ -58,7 +58,7 @@ void write_mesh(uint8_t state, uint16_t node_addr, uint16_t app_idx)
         .send_ttl = BT_MESH_TTL_DEFAULT,
     };
     // Add paylode to buffer
-    bt_mesh_model_msg_init(&msg, BT_MESH_MODEL_OP_GEN_ONOFF_SET_UNACK);
+    bt_mesh_model_msg_init(&msg, BT_MESH_MODEL_OP_GEN_ONOFF_SET);
     net_buf_simple_add_u8(&msg, state);
     net_buf_simple_add_u8(&msg, 1);
     bt_mesh_model_send(&root_models[2], &ctx, &msg, NULL, NULL);

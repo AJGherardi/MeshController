@@ -98,6 +98,8 @@ void add_key(uint16_t app_idx)
     // Bind app key to self
     err = bt_mesh_cfg_mod_app_bind(BT_MESH_NET_PRIMARY, self->addr, self->addr, key->app_idx,
                                    BT_MESH_MODEL_ID_GEN_ONOFF_SRV, NULL);
+    err = bt_mesh_cfg_mod_app_bind(BT_MESH_NET_PRIMARY, self->addr, self->addr, key->app_idx,
+                                   BT_MESH_MODEL_ID_GEN_ONOFF_CLI, NULL);
     if (err < 0)
     {
         return;
