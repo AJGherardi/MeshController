@@ -49,8 +49,29 @@ void configure_node(uint16_t addr, uint16_t app_idx)
     {
         return;
     }
-    // Bind app key to node
-    err = bt_mesh_cfg_mod_app_bind(BT_MESH_NET_PRIMARY, node->addr, node->addr, key->app_idx,
+    // Store node
+    bt_mesh_cdb_node_store(node);
+}
+
+void configure_elem(uint16_t node_addr, uint16_t elem_addr, uint16_t app_idx)
+{
+    int err;
+    struct bt_mesh_cdb_node *node;
+    struct bt_mesh_cdb_app_key *key;
+    // Get node from cdb
+    node = bt_mesh_cdb_node_get(node_addr);
+    if (node == NULL)
+    {
+        return;
+    }
+    // Get app key from cdb
+    key = bt_mesh_cdb_app_key_get(app_idx);
+    if (key == NULL)
+    {
+        return;
+    }
+    // Bind app key to elem
+    err = bt_mesh_cfg_mod_app_bind(BT_MESH_NET_PRIMARY, node->addr, elem_addr, key->app_idx,
                                    BT_MESH_MODEL_ID_GEN_ONOFF_SRV, NULL);
     if (err < 0)
     {

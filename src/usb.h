@@ -19,6 +19,8 @@
 #define OP_REBOOT 0x11
 #define OP_NODE_RESET 0x12
 #define OP_STATE 0x13
+#define OP_CONFIGURE_ELEM 0x14
+#define OP_CONFIGURE_ELEM_STATUS 0x15
 
 extern struct device *usb;
 

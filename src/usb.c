@@ -43,6 +43,14 @@ static void handler(struct device *dev)
         configure_node(addr, app_idx);
         break;
     }
+    case OP_CONFIGURE_ELEM:
+    {
+        uint16_t node_addr = join2(buffer[1], buffer[2]);
+        uint16_t elem_addr = join2(buffer[3], buffer[4]);
+        uint16_t app_idx = join2(buffer[5], buffer[6]);
+        configure_elem(node_addr, elem_addr, app_idx);
+        break;
+    }
     case OP_SEND_MESSAGE:
     {
         uint16_t addr = join2(buffer[2], buffer[3]);
