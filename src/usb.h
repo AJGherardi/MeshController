@@ -21,6 +21,9 @@
 #define OP_STATE 0x13
 #define OP_CONFIGURE_ELEM 0x14
 #define OP_CONFIGURE_ELEM_STATUS 0x15
+#define OP_SEND_RECALL_MESSAGE 0x16
+#define OP_SEND_STORE_MESSAGE 0x17
+#define OP_SEND_DELETE_MESSAGE 0x18
 
 extern struct device *usb;
 

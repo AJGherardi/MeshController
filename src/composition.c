@@ -6,6 +6,14 @@ static void gen_onoff_status(struct bt_mesh_model *model,
                              struct bt_mesh_msg_ctx *ctx,
                              struct net_buf_simple *buf);
 
+static void scene_status(struct bt_mesh_model *model,
+                         struct bt_mesh_msg_ctx *ctx,
+                         struct net_buf_simple *buf);
+
+static void scene_register_status(struct bt_mesh_model *model,
+                                  struct bt_mesh_msg_ctx *ctx,
+                                  struct net_buf_simple *buf);
+
 static struct bt_mesh_cfg_srv cfg_srv = {
     .relay = BT_MESH_RELAY_ENABLED,
     .beacon = BT_MESH_BEACON_DISABLED,
@@ -26,6 +34,16 @@ static const struct bt_mesh_model_op gen_onoff_cli_op[] = {
     BT_MESH_MODEL_OP_END,
 };
 
+static const struct bt_mesh_model_op scene_srv_op[] = {
+    {BT_MESH_MODEL_OP_SCENE_STATUS, 0, scene_status},
+    {BT_MESH_MODEL_OP_SCENE_REGISTER_STATUS, 0, scene_register_status},
+    BT_MESH_MODEL_OP_END,
+};
+
+static const struct bt_mesh_model_op scene_setup_srv_op[] = {
+    BT_MESH_MODEL_OP_END,
+};
+
 static void gen_onoff_status(struct bt_mesh_model *model,
                              struct bt_mesh_msg_ctx *ctx,
                              struct net_buf_simple *buf)
@@ -39,7 +57,17 @@ static void gen_onoff_status(struct bt_mesh_model *model,
     write[0] = (addr >> 8);
     write[1] = (addr);
     write[2] = state;
-    write_usb(usb, OP_STATE, write, 3);    
+    write_usb(usb, OP_STATE, write, 3);
+}
+static void scene_status(struct bt_mesh_model *model,
+                         struct bt_mesh_msg_ctx *ctx,
+                         struct net_buf_simple *buf)
+{
+}
+static void scene_register_status(struct bt_mesh_model *model,
+                                  struct bt_mesh_msg_ctx *ctx,
+                                  struct net_buf_simple *buf)
+{
 }
 
 struct bt_mesh_model root_models[] = {
@@ -48,6 +76,10 @@ struct bt_mesh_model root_models[] = {
     BT_MESH_MODEL(BT_MESH_MODEL_ID_GEN_ONOFF_SRV, gen_onoff_srv_op,
                   NULL, NULL),
     BT_MESH_MODEL(BT_MESH_MODEL_ID_GEN_ONOFF_CLI, gen_onoff_cli_op,
+                  NULL, NULL),
+    BT_MESH_MODEL(BT_MESH_MODEL_ID_SCENE_SRV, scene_srv_op,
+                  NULL, NULL),
+    BT_MESH_MODEL(BT_MESH_MODEL_ID_SCENE_SETUP_SRV, scene_setup_srv_op,
                   NULL, NULL),
 };
 

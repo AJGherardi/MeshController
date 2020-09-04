@@ -22,7 +22,22 @@ void reset_node(uint16_t addr)
 
 void send_message(uint8_t state, uint16_t addr, uint16_t app_idx)
 {
-    write_mesh(state, addr, app_idx);
+    write_mesh_state(state, addr, app_idx);
+}
+
+void send_recall_message(uint16_t scene_number, uint16_t addr, uint16_t app_idx)
+{
+    write_mesh_recall(scene_number, addr, app_idx);
+}
+
+void send_store_message(uint16_t scene_number, uint16_t addr, uint16_t app_idx)
+{
+    write_mesh_store(scene_number, addr, app_idx);
+}
+
+void send_delete_message(uint16_t scene_number, uint16_t addr, uint16_t app_idx)
+{
+    write_mesh_delete(scene_number, addr, app_idx);
 }
 
 void configure_node(uint16_t addr, uint16_t app_idx)
@@ -53,7 +68,7 @@ void configure_node(uint16_t addr, uint16_t app_idx)
     bt_mesh_cdb_node_store(node);
 }
 
-void configure_elem(uint16_t node_addr, uint16_t elem_addr, uint16_t app_idx)
+void configure_elem(uint16_t group_addr, uint16_t node_addr, uint16_t elem_addr, uint16_t app_idx)
 {
     int err;
     struct bt_mesh_cdb_node *node;
@@ -73,6 +88,14 @@ void configure_elem(uint16_t node_addr, uint16_t elem_addr, uint16_t app_idx)
     // Bind app key to elem
     err = bt_mesh_cfg_mod_app_bind(BT_MESH_NET_PRIMARY, node->addr, elem_addr, key->app_idx,
                                    BT_MESH_MODEL_ID_GEN_ONOFF_SRV, NULL);
+    err = bt_mesh_cfg_mod_app_bind(BT_MESH_NET_PRIMARY, node->addr, elem_addr, key->app_idx,
+                                   BT_MESH_MODEL_ID_SCENE_SRV, NULL);
+    err = bt_mesh_cfg_mod_app_bind(BT_MESH_NET_PRIMARY, node->addr, elem_addr, key->app_idx,
+                                   BT_MESH_MODEL_ID_SCENE_SETUP_SRV, NULL);
+    err = bt_mesh_cfg_mod_sub_add(BT_MESH_NET_PRIMARY, node->addr, elem_addr, group_addr,
+                                  BT_MESH_MODEL_ID_SCENE_SRV, NULL);
+    err = bt_mesh_cfg_mod_sub_add(BT_MESH_NET_PRIMARY, node->addr, elem_addr, group_addr,
+                                  BT_MESH_MODEL_ID_SCENE_SETUP_SRV, NULL);
     if (err < 0)
     {
         return;
@@ -121,6 +144,10 @@ void add_key(uint16_t app_idx)
                                    BT_MESH_MODEL_ID_GEN_ONOFF_SRV, NULL);
     err = bt_mesh_cfg_mod_app_bind(BT_MESH_NET_PRIMARY, self->addr, self->addr, key->app_idx,
                                    BT_MESH_MODEL_ID_GEN_ONOFF_CLI, NULL);
+    err = bt_mesh_cfg_mod_app_bind(BT_MESH_NET_PRIMARY, self->addr, self->addr, key->app_idx,
+                                   BT_MESH_MODEL_ID_SCENE_SRV, NULL);
+    err = bt_mesh_cfg_mod_app_bind(BT_MESH_NET_PRIMARY, self->addr, self->addr, key->app_idx,
+                                   BT_MESH_MODEL_ID_SCENE_SETUP_SRV, NULL);
     if (err < 0)
     {
         return;
