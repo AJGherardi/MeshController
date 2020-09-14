@@ -54,8 +54,8 @@ static void gen_onoff_status(struct bt_mesh_model *model,
     addr = ctx->addr;
     // Write state and addr to usb
     uint8_t write[3];
-    write[0] = (addr >> 8);
-    write[1] = (addr);
+    write[0] = (addr);
+    write[1] = (addr >> 8);
     write[2] = state;
     write_usb(usb, OP_STATE, write, 3);
 }

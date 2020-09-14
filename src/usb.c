@@ -109,8 +109,8 @@ uint16_t join2(uint8_t d1, uint8_t d2)
         uint8_t bytes[2];
         uint16_t n;
     } join;
-    join.bytes[0] = d2;
-    join.bytes[1] = d1;
+    join.bytes[0] = d1;
+    join.bytes[1] = d2;
     output = join.n;
     return output;
 }
@@ -122,10 +122,10 @@ uint32_t join4(uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4)
         uint8_t bytes[4];
         uint32_t n;
     } join;
-    join.bytes[0] = d4;
-    join.bytes[1] = d3;
-    join.bytes[2] = d2;
-    join.bytes[3] = d1;
+    join.bytes[0] = d1;
+    join.bytes[1] = d2;
+    join.bytes[2] = d3;
+    join.bytes[3] = d4;
     output = join.n;
     return output;
 }

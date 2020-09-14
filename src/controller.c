@@ -156,8 +156,8 @@ void add_key(uint16_t app_idx)
     bt_mesh_cdb_node_store(self);
     // Convert app key index and send
     uint8_t write[2];
-    write[0] = (app_idx >> 8);
-    write[1] = (app_idx);
+    write[0] = (app_idx);
+    write[1] = (app_idx >> 8);
     write_usb(usb, OP_ADD_KEY_STATUS, write, 2);
 }
 
@@ -183,7 +183,7 @@ void setup()
     }
     // Convert addr and send
     uint8_t write[2];
-    write[0] = (self_addr >> 8);
-    write[1] = (self_addr);
+    write[0] = (self_addr);
+    write[1] = (self_addr >> 8);
     write_usb(usb, OP_SETUP_STATUS, write, 2);
 }

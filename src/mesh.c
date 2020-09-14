@@ -13,8 +13,8 @@ static void node_added(uint16_t net_idx, uint8_t uuid[16], uint16_t addr, uint8_
 {
     // Convert addr and send
     uint8_t write[2];
-    write[0] = (addr >> 8);
-    write[1] = (addr);
+    write[0] = (addr);
+    write[1] = (addr >> 8);
     write_usb(usb, OP_NODE_ADDED, write, 2);
 }
 
