@@ -82,7 +82,12 @@ static void event_status(struct bt_mesh_model *model,
                          struct bt_mesh_msg_ctx *ctx,
                          struct net_buf_simple *buf)
 {
-    printk("event");
+    uint16_t addr;
+    addr = ctx->addr;
+    uint8_t write[2];
+    write[0] = (addr);
+    write[1] = (addr >> 8);
+    write_usb(usb, OP_EVENT, write, 2);
 }
 
 struct bt_mesh_model root_models[] = {

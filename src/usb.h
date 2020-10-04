@@ -25,6 +25,7 @@
 #define OP_SEND_STORE_MESSAGE 0x17
 #define OP_SEND_DELETE_MESSAGE 0x18
 #define OP_SEND_BIND_MESSAGE 0x19
+#define OP_EVENT 0x20
 
 extern struct device *usb;
 
