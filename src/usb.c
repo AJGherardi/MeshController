@@ -83,6 +83,14 @@ static void handler(struct device *dev)
         send_delete_message(scene_number, addr, app_idx);
         break;
     }
+    case OP_SEND_BIND_MESSAGE:
+    {
+        uint16_t scene_number = join2(buffer[1], buffer[2]);
+        uint16_t addr = join2(buffer[3], buffer[4]);
+        uint16_t app_idx = join2(buffer[5], buffer[6]);
+        send_bind_message(scene_number, addr, app_idx);
+        break;
+    }
     case OP_RESET:
     {
         reset();
@@ -105,7 +113,8 @@ static void handler(struct device *dev)
 uint16_t join2(uint8_t d1, uint8_t d2)
 {
     uint16_t output;
-    union {
+    union
+    {
         uint8_t bytes[2];
         uint16_t n;
     } join;
@@ -118,7 +127,8 @@ uint16_t join2(uint8_t d1, uint8_t d2)
 uint32_t join4(uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4)
 {
     uint32_t output;
-    union {
+    union
+    {
         uint8_t bytes[4];
         uint32_t n;
     } join;

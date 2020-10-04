@@ -7,6 +7,9 @@
 #include <bluetooth/hci.h>
 #include <bluetooth/mesh.h>
 
+// Model IDs
+#define BT_MESH_MODEL_ID_EVENT_SETUP_SRV 0x1312
+#define BT_MESH_MODEL_ID_EVENT_CLI 0x1313
 // Op codes
 #define BT_MESH_MODEL_OP_GEN_ONOFF_SET BT_MESH_MODEL_OP_2(0x82, 0x02)
 #define BT_MESH_MODEL_OP_GEN_ONOFF_SET_UNACK BT_MESH_MODEL_OP_2(0x82, 0x03)
@@ -22,9 +25,12 @@
 #define BT_MESH_MODEL_OP_SCENE_STORE_UNACK BT_MESH_MODEL_OP_2(0x82, 0x47)
 #define BT_MESH_MODEL_OP_SCENE_DELETE BT_MESH_MODEL_OP_2(0x82, 0x9E)
 #define BT_MESH_MODEL_OP_SCENE_DELETE_UNACK BT_MESH_MODEL_OP_2(0x82, 0x9F)
+#define BT_MESH_MODEL_OP_EVENT_BIND BT_MESH_MODEL_OP_2(0x82, 0xAA)
+#define BT_MESH_MODEL_OP_EVENT_STATUS BT_MESH_MODEL_OP_2(0x82, 0xAB)
 
 void bt_ready(void);
 void write_mesh_state(uint8_t state, uint16_t node_addr, uint16_t app_idx);
+void write_mesh_bind(uint16_t scene_number, uint16_t node_addr, uint16_t app_idx);
 void write_mesh_store(uint16_t scene_number, uint16_t node_addr, uint16_t app_idx);
 void write_mesh_recall(uint16_t scene_number, uint16_t node_addr, uint16_t app_idx);
 void write_mesh_delete(uint16_t scene_number, uint16_t node_addr, uint16_t app_idx);

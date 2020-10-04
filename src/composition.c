@@ -14,6 +14,10 @@ static void scene_register_status(struct bt_mesh_model *model,
                                   struct bt_mesh_msg_ctx *ctx,
                                   struct net_buf_simple *buf);
 
+static void event_status(struct bt_mesh_model *model,
+                         struct bt_mesh_msg_ctx *ctx,
+                         struct net_buf_simple *buf);
+
 static struct bt_mesh_cfg_srv cfg_srv = {
     .relay = BT_MESH_RELAY_ENABLED,
     .beacon = BT_MESH_BEACON_DISABLED,
@@ -44,6 +48,11 @@ static const struct bt_mesh_model_op scene_setup_srv_op[] = {
     BT_MESH_MODEL_OP_END,
 };
 
+static const struct bt_mesh_model_op event_cli_op[] = {
+    {BT_MESH_MODEL_OP_EVENT_STATUS, 0, event_status},
+    BT_MESH_MODEL_OP_END,
+};
+
 static void gen_onoff_status(struct bt_mesh_model *model,
                              struct bt_mesh_msg_ctx *ctx,
                              struct net_buf_simple *buf)
@@ -69,6 +78,12 @@ static void scene_register_status(struct bt_mesh_model *model,
                                   struct net_buf_simple *buf)
 {
 }
+static void event_status(struct bt_mesh_model *model,
+                         struct bt_mesh_msg_ctx *ctx,
+                         struct net_buf_simple *buf)
+{
+    printk("event");
+}
 
 struct bt_mesh_model root_models[] = {
     BT_MESH_MODEL_CFG_SRV(&cfg_srv),
@@ -80,6 +95,10 @@ struct bt_mesh_model root_models[] = {
     BT_MESH_MODEL(BT_MESH_MODEL_ID_SCENE_SRV, scene_srv_op,
                   NULL, NULL),
     BT_MESH_MODEL(BT_MESH_MODEL_ID_SCENE_SETUP_SRV, scene_setup_srv_op,
+                  NULL, NULL),
+    BT_MESH_MODEL(BT_MESH_MODEL_ID_EVENT_SETUP_SRV, NULL,
+                  NULL, NULL),
+    BT_MESH_MODEL(BT_MESH_MODEL_ID_EVENT_CLI, event_cli_op,
                   NULL, NULL),
 };
 

@@ -20,6 +20,7 @@ static void node_added(uint16_t net_idx, uint8_t uuid[16], uint16_t addr, uint8_
 
 static void prov_reset(void)
 {
+    printk("test");
 }
 
 static uint8_t dev_uuid[16] = {0xdd, 0xdd};
@@ -44,6 +45,23 @@ void bt_ready(void)
     {
         memcpy(dev_uuid, oob.addr.a.val, 6);
     }
+}
+
+void write_mesh_bind(uint16_t scene_number, uint16_t node_addr, uint16_t app_idx)
+{
+    // Make msg buffer
+    NET_BUF_SIMPLE_DEFINE(msg, 2 + 6 + 4);
+    // Define msg context
+    struct bt_mesh_msg_ctx ctx = {
+        .net_idx = BT_MESH_NET_PRIMARY,
+        .app_idx = app_idx,
+        .addr = node_addr,
+        .send_ttl = BT_MESH_TTL_DEFAULT,
+    };
+    // Add paylode to buffer
+    bt_mesh_model_msg_init(&msg, BT_MESH_MODEL_OP_EVENT_BIND);
+    net_buf_simple_add_le16(&msg, scene_number);
+    bt_mesh_model_send(&root_models[6], &ctx, &msg, NULL, NULL);
 }
 
 void write_mesh_state(uint8_t state, uint16_t node_addr, uint16_t app_idx)

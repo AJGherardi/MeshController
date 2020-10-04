@@ -16,6 +16,7 @@ void send_message(uint8_t state, uint16_t addr, uint16_t app_idx);
 void send_recall_message(uint16_t scene_number, uint16_t addr, uint16_t app_idx);
 void send_store_message(uint16_t scene_number, uint16_t addr, uint16_t app_idx);
 void send_delete_message(uint16_t scene_number, uint16_t addr, uint16_t app_idx);
+void send_bind_message(uint16_t scene_number, uint16_t addr, uint16_t app_idx);
 void reset();
 void reboot();
 
